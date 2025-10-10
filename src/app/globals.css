@@ -1,26 +1,82 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 :root {
-  --background: #ffffff;
+  --background: hsl(241, 95%, 9%);
   --foreground: #171717;
+
+  --blue-500: hsl(233, 67%, 56%);
+  --blue-700: hsl(248, 70%, 36%);
+
+  --orange-500: hsl(28, 100%, 52%);
+
+  --app-neutral-900: hsl(243, 96%, 9%);
+  --app-neutral-800: hsl(243, 27%, 20%);
+  --app-neutral-700: hsl(243, 23%, 24%);
+  --app-neutral-600: hsl(243, 23%, 30%);
+  --app-neutral-300: hsl(240, 6%, 70%);
+  --app-neutral-200: hsl(250, 6%, 84%);
+  --app-neutral-0: hsl(0, 0%, 100%);
+
+  --desktop-breakpoint: 1440px;
+  --mobile-breakpoint: 375px;
+
+  --text-color: white;
+  --font-size: 18px;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+
+  --color-blue-500: var(--blue-500);
+  --color-blue-700: var(--blue-700);
+
+  --color-app-neutral-900: var(--app-neutral-900);
+  --color-app-neutral-800: var(--app-neutral-800);
+  --color-app-neutral-700: var(--app-neutral-700);
+  --color-app-neutral-600: var(--app-neutral-600);
+  --color-app-neutral-300: var(--app-neutral-300);
+  --color-app-neutral-200: var(--app-neutral-200);
+  --color-app-neutral-0: var(--app-neutral-0);
+
+  --font-dm-sans: var(--font-dm-sans);
+  --font-bricolage-grotesque: var(--font-bricolage-grotesque);
+
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  --spacing-desktop: var(--desktop-breakpoint);
+  --spacing-mobile: var(--mobile-breakpoint);
+
+  --font-size: var(--font-size);
+  --color: var(--text-color);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  h1 {
+    @apply text-7xl font-bold;
   }
-}
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  h2 {
+    @apply text-5xl font-bold;
+  }
+
+  h3 {
+    @apply text-3xl font-semibold;
+  }
+
+  p {
+    @apply text-base;
+  }
+
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: Arial, Helvetica, sans-serif;
+    color: var(--text-color);
+
+    font-size: var(--font-size);
+    font-family: var(--font-dm-sans);
+    font-weight: 500;
+  }
 }
