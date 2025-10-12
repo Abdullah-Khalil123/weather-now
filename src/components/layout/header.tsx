@@ -10,7 +10,9 @@ const Header = () => {
         width={150}
         height={30}
         alt="logo-weather-now"
+        priority
       />
+
       <UnitSwitch />
     </header>
   );

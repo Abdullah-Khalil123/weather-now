@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import './globals.css';
 import localFont from 'next/font/local';
 import Header from '@/components/layout/header';
+import ReduxProvider from '@/providers/react-redux';
+import ReactQueryProvider from '@/providers/react-query';
 
 const dm_sans = localFont({
   src: [
@@ -57,10 +59,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${dm_sans.variable} ${bricolage_grotesque.variable} antialiased mx-auto max-w-desktop px-8`}
+        className={`${dm_sans.variable} ${bricolage_grotesque.variable} antialiased`}
       >
-        <Header />
-        {children}
+        <ReduxProvider>
+          <ReactQueryProvider>
+            <div className="max-w-desktop mx-auto px-8">
+              <Header />
+              {children}
+            </div>
+          </ReactQueryProvider>
+        </ReduxProvider>
       </body>
     </html>
   );
