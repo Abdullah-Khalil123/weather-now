@@ -63,7 +63,7 @@ export default function RootLayout({
       >
         <ReduxProvider>
           <ReactQueryProvider>
-            <div className="max-w-desktop mx-auto px-8">
+            <div className="max-w-desktop mx-auto px-screen-padding">
               <Header />
               {children}
             </div>

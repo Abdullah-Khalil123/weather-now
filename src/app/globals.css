@@ -4,6 +4,8 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
+  --screen-padding: 32px;
+
   --blue-500: hsl(233, 67%, 56%);
   --blue-700: hsl(248, 70%, 36%);
 
@@ -59,6 +61,8 @@
 }
 
 @theme inline {
+  --spacing-screen-padding: var(--screen-padding);
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
 
@@ -119,6 +123,12 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+}
+
+@media screen and (max-width: 640px) {
+  :root {
+    --screen-padding: 16px;
+  }
 }
 
 @layer base {

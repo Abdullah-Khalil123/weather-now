@@ -7,6 +7,8 @@ import { useCurrentLocationWeather } from '@/hooks/useWeather';
 import { Weather } from '@/types/weather.schema';
 import { Skeleton } from '@/components/ui/skeleton';
 import { SyncLoader } from 'react-spinners';
+import { getWeatherIconKey } from '@/utils/getIcon';
+import { weatherIcons } from '@/constants/weatherIcons';
 
 const Overview = () => {
   const location = useSelector((state: RootState) => state.locationReducer);
@@ -15,6 +17,11 @@ const Overview = () => {
   );
   const { data, isLoading } = useCurrentLocationWeather(location.city);
   const currentWeather: Weather = data || {};
+
+  const iconKey = getWeatherIconKey(
+    !isLoading ? currentWeather.current.condition.text : 'sunny'
+  );
+  const iconSrc = weatherIcons[iconKey];
   return (
     <section>
       {isLoading ? (
@@ -27,10 +34,19 @@ const Overview = () => {
           <Image
             fill
             alt="overview-card-bg"
-            src={'/images/bg-today-large.svg'}
+            src="/images/bg-today-large.svg"
             priority
-            objectFit="cover"
-            className="-z-10"
+            style={{ objectFit: 'cover' }}
+            className="-z-10 hidden sm:block" // hidden on small, visible from sm
+          />
+          {/* Small screens */}
+          <Image
+            fill
+            alt="overview-card-bg-mobile"
+            src="/images/bg-today-small.svg"
+            priority
+            style={{ objectFit: 'cover' }}
+            className="-z-10 block sm:hidden" // visible on small, hidden from sm
           />
           <div className="z-20 px-6 h-full flex flex-col lg:flex-row items-center justify-center lg:justify-between gap-6">
             <div>
@@ -50,15 +66,15 @@ const Overview = () => {
               </p>
             </div>
 
-            <div className="flex items-center">
+            <div className="flex items-center justify-center flex-wrap">
               <Image
                 alt="icon-sunny"
-                src={'/images/icon-sunny.webp'}
+                src={iconSrc}
                 width={100}
                 height={100}
                 priority
               />
-              <h1 className="italic">
+              <h1 className="italic text-5xl lg:text-7xl">
                 {temperatureUnit == 'C'
                   ? currentWeather?.current?.temp_c
                   : currentWeather?.current?.temp_f}

@@ -3,6 +3,7 @@ import { weatherIcons } from '@/constants/weatherIcons';
 export const getWeatherIconKey = (
   conditionText: string
 ): keyof typeof weatherIcons => {
+  if (conditionText == undefined) return 'sunny';
   const lowerCaseText = conditionText.toLowerCase();
   if (lowerCaseText.includes('sunny')) return 'sunny';
   if (lowerCaseText.includes('cloudy') || lowerCaseText.includes('overcast'))

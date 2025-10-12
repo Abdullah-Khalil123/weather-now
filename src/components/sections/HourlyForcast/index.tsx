@@ -92,7 +92,7 @@ const HourlyForcast = ({ className }: { className?: string }) => {
               return (
                 <div
                   key={idx}
-                  className="bg-app-neutral-700 flex items-center my-2 rounded-lg px-2 justify-between text-app-neutral-0/80"
+                  className="bg-app-neutral-700 flex items-center my-2 rounded-lg pl-2 pr-3 justify-between text-app-neutral-0/80"
                 >
                   <div className="flex items-center">
                     <Image
