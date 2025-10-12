@@ -65,6 +65,7 @@ export default function RootLayout({
           <ReactQueryProvider>
             <div className="max-w-desktop mx-auto px-screen-padding">
               <Header />
+
               {children}
             </div>
           </ReactQueryProvider>

@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import React, { useEffect } from 'react';
 import Image from 'next/image';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
@@ -9,19 +9,32 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { SyncLoader } from 'react-spinners';
 import { getWeatherIconKey } from '@/utils/getIcon';
 import { weatherIcons } from '@/constants/weatherIcons';
+import { useRouter } from 'next/navigation';
 
 const Overview = () => {
+  const router = useRouter();
   const location = useSelector((state: RootState) => state.locationReducer);
   const { temperatureUnit } = useSelector(
     (state: RootState) => state.unitReducer
   );
-  const { data, isLoading } = useCurrentLocationWeather(location.city);
+  const { data, isLoading, error, isError } = useCurrentLocationWeather(
+    location.city
+  );
   const currentWeather: Weather = data || {};
 
   const iconKey = getWeatherIconKey(
-    !isLoading ? currentWeather.current.condition.text : 'sunny'
+    !isLoading ? currentWeather?.current?.condition?.text : 'sunny'
   );
   const iconSrc = weatherIcons[iconKey];
+
+  useEffect(() => {
+    if (isError) {
+      router.push('no-results-found');
+    }
+  }, [error, isError]);
+
+  if (isError) return null;
+
   return (
     <section>
       {isLoading ? (
@@ -35,8 +48,7 @@ const Overview = () => {
             fill
             alt="overview-card-bg"
             src="/images/bg-today-large.svg"
-            priority
-            style={{ objectFit: 'cover' }}
+            objectFit="cover"
             className="-z-10 hidden sm:block" // hidden on small, visible from sm
           />
           {/* Small screens */}
@@ -44,8 +56,7 @@ const Overview = () => {
             fill
             alt="overview-card-bg-mobile"
             src="/images/bg-today-small.svg"
-            priority
-            style={{ objectFit: 'cover' }}
+            objectFit="cover"
             className="-z-10 block sm:hidden" // visible on small, hidden from sm
           />
           <div className="z-20 px-6 h-full flex flex-col lg:flex-row items-center justify-center lg:justify-between gap-6">

@@ -9,8 +9,8 @@ import { useSelector } from 'react-redux';
 const WeatherStatCard = () => {
   const location = useSelector((state: RootState) => state.locationReducer);
   const unit = useSelector((state: RootState) => state.unitReducer);
-  const { data, isLoading } = useCurrentLocationWeather(location.city);
-  const currentWeather: Weather = data || {};
+  const { data, isLoading, isError } = useCurrentLocationWeather(location.city);
+  const currentWeather: Weather = !isLoading ? data : {};
 
   type WeatherKey = keyof Weather['current'];
   const weatherStats: {
@@ -40,6 +40,7 @@ const WeatherStatCard = () => {
     },
   ];
 
+  if (isError) return null;
   return (
     <section>
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">

@@ -16,7 +16,6 @@ interface DaySwitchProps {
 }
 
 const DaySwitch = ({ days, selectedDayIndex, onSelectDay }: DaySwitchProps) => {
-  // Use the selectedDayIndex to get the display name for the trigger
   const selectedDayName = days[selectedDayIndex] || 'Select Day';
 
   return (

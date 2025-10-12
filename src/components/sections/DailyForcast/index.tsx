@@ -12,12 +12,13 @@ import { Skeleton } from '@/components/ui/skeleton'; // ShadCN Skeleton
 const DailyForcast = () => {
   const location = useSelector((state: RootState) => state.locationReducer);
   const unit = useSelector((state: RootState) => state.unitReducer);
-  const { data, isLoading } = useWeatherForcast({
+  const { data, isLoading, isError } = useWeatherForcast({
     location: location.city,
     days: 7,
   });
   const forcasts: ForecastDay[] = data?.forecast?.forecastday || [];
 
+  if (isError) return null;
   return (
     <div className="space-y-6">
       <p>Daily forecast</p>

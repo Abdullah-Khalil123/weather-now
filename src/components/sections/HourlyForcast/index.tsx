@@ -12,25 +12,23 @@ import {
 import { useSelector } from 'react-redux';
 import { getWeatherIconKey } from '@/utils/getIcon';
 import { Skeleton } from '@/components/ui/skeleton';
+import { WEEKDAYS_LONG } from '@/constants/LongDays';
 
 const HourlyForcast = ({ className }: { className?: string }) => {
   const location = useSelector((state: RootState) => state.locationReducer);
   const unit = useSelector((state: RootState) => state.unitReducer);
   const [selectedDayIndex, setSelectedDayIndex] = useState(0);
 
-  const { data, isLoading } = useWeatherForcast({
+  const { data, isLoading, isError } = useWeatherForcast({
     location: location.city,
     days: 7,
   });
 
   const forcasts: ForecastDay[] = data?.forecast?.forecastday || [];
 
-  const forecastDayNames = useMemo(() => {
-    return forcasts.map((day) =>
-      new Date(day.date).toLocaleDateString('en-US', { weekday: 'long' })
-    );
-  }, [forcasts]);
+  const forecastDayNames = WEEKDAYS_LONG;
 
+  // Makes the Next 9 Hours of the current day
   const displayedHourlyData = useMemo(() => {
     if (forcasts.length === 0) {
       return [];
@@ -57,6 +55,8 @@ const HourlyForcast = ({ className }: { className?: string }) => {
 
     return targetHourlyData.slice(0, 9);
   }, [forcasts, selectedDayIndex]);
+
+  if (isError) return null;
 
   return (
     <section className={className}>

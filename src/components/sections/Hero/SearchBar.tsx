@@ -28,12 +28,19 @@ const SearchBar = () => {
   const showList = open && (isLoading || isFetched);
 
   const handleSearch = () => {
-    if (!selectedCity) return;
+    if (!value.trim()) return;
+
+    const cityData = selectedCity ?? {
+      name: value,
+      country: 'Unknown',
+      region: 'Unknown',
+    };
+
     dispatch(
       setLocation({
-        city: selectedCity.name,
-        country: selectedCity.country,
-        region: selectedCity.region,
+        city: cityData.name,
+        country: cityData.country,
+        region: cityData.region,
       })
     );
   };
@@ -52,12 +59,16 @@ const SearchBar = () => {
   }, []);
 
   return (
-    <div
-      ref={wrapperRef}
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        handleSearch();
+      }}
       className="space-y-2 lg:flex gap-4 lg:space-y-0 w-full lg:w-fit"
     >
       <Command
-        onSelect={handleSearch}
+        ref={wrapperRef}
+        filter={() => 1}
         className="relative overflow-visible bg-app-neutral-800 w-full lg:w-md rounded-lg"
       >
         <CommandInput
@@ -68,6 +79,11 @@ const SearchBar = () => {
           onValueChange={(val) => {
             setValue(val);
             setOpen(val.trim().length > 0);
+          }}
+          onKeyDown={(e) => {
+            if (e.key == 'Enter') {
+              handleSearch();
+            }
           }}
         />
 
@@ -99,13 +115,10 @@ const SearchBar = () => {
         )}
       </Command>
 
-      <button
-        onClick={handleSearch}
-        className="bg-blue-500 w-full lg:w-30 py-2 rounded-lg px-4 text-base hover:bg-blue-700 transition cursor-pointer"
-      >
+      <button className="bg-blue-500 w-full lg:w-30 py-2 rounded-lg px-4 text-base hover:bg-blue-700 transition cursor-pointer">
         Search
       </button>
-    </div>
+    </form>
   );
 };
 
