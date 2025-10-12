@@ -1,8 +1,8 @@
-import { getAutoComplete } from '@/actions/autocomplete';
+import { getAutoComplete } from '@/services/autocomplete';
 import {
   getCurrentLocationWeather,
   getWeatherForcastDays,
-} from '@/actions/weather';
+} from '@/services/weather';
 import { useQuery } from '@tanstack/react-query';
 
 const useGetAutoComplete = (search?: string) => {
